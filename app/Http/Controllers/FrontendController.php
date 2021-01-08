@@ -36,15 +36,18 @@ class FrontendController extends Controller
     public function advert($id, $name){
         $advert = $this->fR->getSingleAdvert($id);
         $city = $advert->city->id;
-        $costs = $this->fR->getAdverts($city);
+        $form = $advert->form;
+        $type = $advert->type;
+        $average = $this->fR->getAdverts($city, $form, $type);
+        $compare = $this->fR->countDiff($id, $average, $form);
 
         $created = $this->fG->countDate($advert->created_at);
         $updated = $this->fG->countDate($advert->updated_at);
         if(Auth::user() != null) {
             $observed = $this->fR->isObserved($id);
-            return view('frontend.advert', ['advert' => $advert, 'created' => $created, 'updated' => $updated, 'observed' => $observed, 'costs' => $costs]);
+            return view('frontend.advert', ['advert' => $advert, 'created' => $created, 'updated' => $updated, 'observed' => $observed, 'average' => $average, 'compare' => $compare]);
         } else {
-            return view('frontend.advert', ['advert' => $advert, 'created' => $created, 'updated' => $updated, 'costs' => $costs]);
+            return view('frontend.advert', ['advert' => $advert, 'created' => $created, 'updated' => $updated, 'average' => $average, 'compare' => $compare]);
         }
     }
 

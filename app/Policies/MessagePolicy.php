@@ -20,7 +20,7 @@ class MessagePolicy
     }
 
     public function checkOwner(User $user, Message $message){
-        if($message->user_id == 'App\User')
+        if($message->user_id == $user->id)
             return $user->id === $message->user_id;
     }
 }

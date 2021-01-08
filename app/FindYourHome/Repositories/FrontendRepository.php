@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Session;
 class FrontendRepository implements FrontendRepositoryInterface{
 
     public function getAdvertsForMainPage(){
-        return Advert::with(['city', 'costs', 'dimensions', 'photos'])->latest()->paginate(8);
+        return Advert::with(['city', 'costs', 'dimensions', 'photos'])->latest()->paginate(12);
     }
 
     public function getSingleAdvert($id){
@@ -51,9 +51,34 @@ class FrontendRepository implements FrontendRepositoryInterface{
         return $advert;
     }
 
-    public function getAdverts($city) {
-        $adverts = Advert::with('costs', 'city')->where('city_id', $city)->get();
-        return $adverts;
+    public function getAdverts($city, $form, $type) {
+        $adverts = Advert::where([['city_id', $city], ['form', $form], ['type', $type]])->pluck('id')->toArray();
+        if($type == 'wynajem') {
+            $costs = Cost::whereIn('advert_id', $adverts)->avg('rent');
+        }
+        else {
+            $costs = Cost::whereIn('advert_id', $adverts)->avg('price');
+        }   
+        return round($costs);
+    }
+
+    public function countDiff($id, $average, $form) {
+        $advert = Advert::findOrFail($id);
+        if($form == 'sprzedaż') {
+            if($advert->costs->price == 0)
+                $result = 0;
+            else
+                $result = round(($advert->costs->price - $average) / ($advert->costs->price/10)) * 10;
+        } else {
+            if($advert->costs->rent == 0)
+                $result = 0;
+            else
+                $result = round(($advert->costs->rent - $average) / ($advert->costs->rent/10)) * 10;
+        }
+        if($result < 0)
+            return $result - (2 * $result);
+        else
+            return $result;
     }
 
 }

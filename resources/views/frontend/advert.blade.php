@@ -13,15 +13,15 @@
 
             <div class="col-md-4 mt-5">
                 <h4 class="mt-5">Właściciel</h4>
-                <div class="card mt-2" style="width: 18rem; border: none;">
-                    <div class="card-body" style="background-color: #f7f7f9;">
+                <div class="card mt-2 text-white" style="width: 18rem; border: none;">
+                    <div class="card-body" style="background-color: #3E3F3A; border-radius: 4px 4px;">
                         <img src="{{ asset('images/photo.jpg') }}" alt="..." class="img-fluid mb-3" width="100" height="100">
-                        <h5 class="card-title">{{ $advert->user->FullName}}</h5>
-                        <p class="card-text">tel.: {{ $advert->user->telephone }}</p>
-                        <p class="card-text">email: {{ $advert->user->email }}</p>
-                        <p class="card-text">Objekt nr.: {{ $advert->id }}</p>
-                        <p class="card-text">Dodano: {{ $created}}</p>
-                        <p class="card-text">Zaaktualizowano: {{ $updated }}</p>
+                        <h5 class="card-title"><strong>{{ $advert->user->FullName}}</strong></h5>
+                        <p class="card-text">tel.: <strong>{{ $advert->user->telephone }}</strong></p>
+                        <p class="card-text">email: <strong>{{ $advert->user->email }}</strong></p>
+                        <p class="card-text">Objekt nr.: <strong>{{ $advert->id }}</strong></p>
+                        <p class="card-text">Dodano: <strong>{{ $created}}</strong></p>
+                        <p class="card-text">Zaaktualizowano: <strong>{{ $updated }}</strong></p>
                         <a href="{{ route('userAdverts',['id' => $advert->user->id]) }}" style="width: 15rem" class="btn btn-success mb-1">Wszystkie ogłoszenia użytkownika</a>
                         @auth
                         @if($observed != null)
@@ -69,12 +69,29 @@
                 <h4 class="mt-5">Cena wg. średniej</h4>
                 <div class="card" style="width: 18rem; border: none;">
                     <div class="card-body" style="background-color: #f7f7f9;">
-                        <p>Średnia w: {{ $advert->city->name }}</p>
+                        <p>Średnia w <strong>{{ $advert->city->name }} : {{ $average }}zł</strong></p>
                         <hr>
-                        @foreach($costs as $cost)
-                                @continue($cost->form != 'pokój')
-                            <p>{{$cost->form}} {{ $cost->costs->rent }}</p>
-                        @endforeach
+                        @if($advert->type == 'sprzedaż')
+                            <p>Cena: <strong>{{ $advert->costs->price }}zł</strong></p>
+                            <hr>
+                            @if($advert->costs->price > $average)
+                                <p><strong class="text-danger">Drożej o: {{ $compare }}%</strong></p>
+                            @elseif($advert->costs->price < $average)
+                                <p><strong class="text-success">Taniej o: {{ $compare }}%</strong></p>
+                            @else
+                                <p><strong class="text-warning">Równo z średnią: </strong></p>
+                            @endif
+                        @else
+                            <p>Czynsz: <strong>{{ $advert->costs->rent }}zł</strong></p>
+                            <hr>
+                            @if($advert->costs->rent > $average)
+                                <p><strong class="text-danger">Drożej o: {{ $compare }}%</strong></p>
+                            @elseif($advert->costs->rent < $average)
+                                <p><strong class="text-success">Taniej o: {{ $compare }}%</strong></p>
+                            @else
+                                <p><strong class="text-info">Równo z średnią</strong></p>
+                            @endif
+                        @endif
                     </div>
                 </div>
             </div>
@@ -243,7 +260,7 @@
         </div>
 
 
-        <div class="col-md-8 mb-5 bg-light rounded pt-2 pb-2">
+        <div class="col-md-8 my-5 bg-light rounded pt-2 pb-2">
             <h3>Wyślij wiadomość do {{ $advert->user->FullName }}</h3>
             <br>
             @if(Session::has('messagesent'))

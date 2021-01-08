@@ -17,7 +17,7 @@
     </script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top text-white py-3">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top text-white py-3" style="background-color: #2f3640;">
         <a class="navbar-brand mr-5" href="{{ url('/') }}">Znajdź Swój Dom</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -42,9 +42,9 @@
         </div>
       </nav>
 
-      <div class="container-fluid mt-3">
+      <div class="container-fluid">
           <div class="row">
-              <nav class="col-md-2 d-none d-md-block bg-light sidebar mt-4">
+              <nav class="col-md-2 d-none d-md-block bg-light sidebar mt-2">
                   <div class="sidebar-sticky">
                       <ul class="list-group">
                           <li class="list-group-item d-flex justify-content-between align-items-center">

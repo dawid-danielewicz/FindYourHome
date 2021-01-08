@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 @section('content')
-    <div class="jumbotron jumbotron-fluid mt-5 text-white" style="background-image: url({{ asset('images/flat.jpg') }});">
+    <div class="jumbotron jumbotron-fluid mt-5 text-white" style="background-image: url({{ asset('images/bg.jpg') }});">
         <div class="container">
             <h1 class="display-4 pt-5 mt-5 text-white">Znajdź swoje miejsce</h1>
             <p class="lead">Znajdź coś dla siebie wśród bogatej oferty ogłoszeń. </p>
@@ -196,7 +196,7 @@
             @if(session('noadverts'))
                 <p class="text-md-center text-danger">{{ session('noadverts') }}</p>
             @endif
-            <p>Znaleziono {{ count($city->adverts) }} ofert</p>
+            <p>Znaleziono {{ count($city->adverts) }} ofert(y)</p>
             @foreach($city->adverts as $advert)
             <div class="card mb-3">
                 <div class="row no-gutters">

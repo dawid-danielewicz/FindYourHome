@@ -5,7 +5,7 @@
     </div>
     <br>
     <table class="table table-hover">
-        <thead class="thead-dark">
+        <thead class="thead-dark" style="background-color: #2f3640;">
         <tr>
             <th scope="col">id</th>
             <th scope="col">nazwa</th>

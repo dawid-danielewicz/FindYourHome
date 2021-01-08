@@ -45,13 +45,13 @@
                           <a class="nav-link" href="{{ url('/admin/messages') }}">Wiadomości <span class="badge badge-pill badge-success">{{ count(Auth::user()->messages) }}</span></a>
                       </li>
                           <li class="nav-item">
-                              <a class="nav-link" href="{{ url('admin/messages') }}">Obserwowane <span class="badge badge-pill badge-warning">{{ count(Auth::user()->observeAdvert) }}</span></a>
+                              <a class="nav-link" href="{{ url('admin/observables') }}">Obserwowane <span class="badge badge-pill badge-warning">{{ count(Auth::user()->observeAdvert) }}</span></a>
                           </li>
                       @endauth
                   </ul>
                     @guest
-                    <a href="{{ url('register') }}" class="btn btn-primary my-2 my-sm-0 mr-1">Zarejestruj się</a>
-                    <a href="{{ url('login') }}" class="btn btn-secondary my-2 my-sm-0">Zaloguj się</a>
+                    <a href="{{ url('register') }}" class="btn btn-primary mr-1 py-2">Rejestracja</a>
+                    <a href="{{ url('login') }}" class="btn btn-warning py-2">Logowanie</a>
                     @else
                         <ul class="navbar-nav">
                         <li class="nav-item dropdown">
@@ -60,13 +60,13 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item text-success" href="{{ url('admin/addAdvert') }}">Dodaj ogłoszenie</a>
-                                <a class="dropdown-item" href="{{ url('admin/user') }}">Mój profil</a>
+                                <a class="dropdown-item text-success" href="{{ url('admin/addAdvert') }}"><strong>Dodaj ogłoszenie</strong></a>
+                                <a class="dropdown-item" href="{{ url('admin/user') }}"><strong>Mój profil</strong></a>
                                 <hr class="dropdown-divider">
                                 <a class="dropdown-item text-danger" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                    Wyloguj się
+                                    <strong>Wyloguj się</strong>
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -116,7 +116,7 @@
                     <div class="container-fluid">
                         <div class="row border-top" style="background-color: #e9ecef;">
                             <div class="col-sm-4 offset-4 text-center py-5">
-                                ZnajdźSwójDom &copy; {{ date('Y') }}
+                                Znajdź Swój Dom &copy; {{ date('Y') }}
                             </div>
                         </div>
                     </div>

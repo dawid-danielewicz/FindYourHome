@@ -1,16 +1,16 @@
 @extends('layouts.frontend')
 @section('content')
-    <div class="jumbotron jumbotron-fluid mt-5 text-white" style="background-image: url({{ asset('images/flat.jpg') }});">
-        <div class="container" style="height: 100%;">
+    <div class="jumbotron jumbotron-fluid mt-5 text-white" style="background-image: url({{ asset('images/bg.jpg') }}); background-position: center center; background-size: cover;">
+        <div class="container" style="height: 100%; font-weight: bold;">
             <h1 class="display-4 pt-5 mt-5 text-white">Znajdź swoje miejsce</h1>
-            <p class="lead">Znajdź coś dla siebie wśród bogatej oferty ogłoszeń. </p>
+            <p class="lead mb-2">Znajdź coś dla siebie wśród bogatej oferty ogłoszeń. </p>
 
             <form class="form-inline mb-5 pb-5" method="POST" action="{{ url('/search') }}">
                 @csrf
                 <div class="form-row">
                     <div class="form-group">
                         <label class="sr-only" for="city">Miasto</label>
-                        <input type="text" class="form-control mb-2 mr-sm-1 autocomplete" id="city" name="city" value="{{old('city')}}" placeholder="City">
+                        <input type="text" class="form-control mb-2 mr-sm-1 autocomplete" id="city" name="city" value="{{old('city')}}" placeholder="Miasto">
                     </div>
 
                     <div class="form-group">
@@ -104,7 +104,7 @@
                         @endif
                     </select>
 
-                    <select class="form-control mb-2 mr-sm-1" id="energy" name="energy">
+                    <select class="form-control mb-2 mr-5" id="energy" name="energy">
                         <option value="">Typ energii</option>
                         @if(old('energy') == 'gaz')
                             <option selected value="gaz">Gaz</option>
@@ -159,9 +159,9 @@
 
                     </select>
                 </div>
-                <div class="form-row">
+                <div class="form-row bg-warning p-2" style="border-radius: 4px 4px">
 
-                    <div class="form-check form-check-inline flat">
+                    <div class="form-check form-check-inline flat ml-2 mr-3">
                         <input class="form-check-input" type="checkbox" id="aircondition" name="aircondition" value="1" {{ old('aircondition') ? 'checked' : '' }}>
                         <label class="form-check-label" for="aircondition">Klimatyzacja</label>
                     </div>
@@ -181,12 +181,12 @@
                         <label class="form-check-label" for="balcony">Balkon</label>
                     </div>
 
-                    <div class="form-check form-check-inline flat mr-3 ml-1">
+                    <div class="form-check form-check-inline flat mr-4 ml-1">
                         <input class="form-check-input" type="checkbox" id="terrace" name="terrace" value="1" {{ old('terrace') ? 'checked' : '' }}>
                         <label class="form-check-label" for="terrace">Taras</label>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-warning mb-2 offset-6">Szukaj</button>
+                <button type="submit" class="btn btn-warning mb-2 offset-5 px-3">Szukaj</button>
             </form>
         </div>
     </div>
@@ -196,7 +196,7 @@
         @if(session('noadverts'))
             <p class="text-md-center text-danger">{{ session('noadverts') }}</p>
         @endif
-        <h2 class="text-center my-5">Najnowesze ogłoszenia</h2>
+        <h2 class="text-center my-5">Najnowsze ogłoszenia</h2>
         @foreach($adverts->chunk(4) as $chunked_advert)
         <div class="row">
             @foreach($chunked_advert as $advert)
@@ -204,15 +204,15 @@
                 <div class="card img-fluid">
                     <img src="{{ asset('images/photo.jpg')/*$advert->photos->first()->path ?? null*/ }}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">{{ $advert->name }}</h5>
-                        <p class="card-text">{{ $advert->city->name }}</p>
+                        <h4 class="card-title">{{ $advert->name }}</h4>
+                        <p class="card-text"><strong>{{ $advert->city->name }}</strong></p>
                         @if($advert->costs->rent != 0)
-                            <p class="card-text">Czynsz: {{ $advert->costs->rent }} zł</p>
+                            <p class="card-text">Czynsz: <strong>{{ $advert->costs->rent }} zł</strong></p>
                         @else
-                            <p class="card-text">Cena: {{ $advert->costs->price }} zł</p>
+                            <p class="card-text">Cena: <strong>{{ $advert->costs->price }} zł</strong></p>
                         @endif
-                        <p class="card-text">Powierzchnia: {{ $advert->dimensions->area }} m<sup>2</sup></p>
-                        <a href="{{ route('advert',['id' => $advert->id, 'name' => $advert->name]) }}" class="btn btn-warning text-light">Pokaż</a>
+                        <p class="card-text">Powierzchnia: <strong>{{ $advert->dimensions->area }} m<sup>2</sup></strong></p>
+                        <a href="{{ route('advert',['id' => $advert->id, 'name' => $advert->name]) }}" class="btn btn-warning text-white">Pokaż</a>
                     </div>
                 </div>
             </div>
